@@ -8,7 +8,7 @@ module.exports = (client) => {
         // console.log('AUTHOR:', author)
         const { id } = author
 
-        //new conncetion to mongo
+        //new conncetion to mongos
         await mongo().then(async (mongoose) => {
             try{
             await messageCountSchema.findOneAndUpdate({

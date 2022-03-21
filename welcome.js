@@ -13,7 +13,7 @@ module.exports = (client) => {
             channel.send('You dont have permission to run this commnad')
             return
         }
-        //connection to the database
+        //connection to the database using the code below
         await mongo().then(async (mongoose) => {
             try{
                 new welcomeSchema({

@@ -43,6 +43,7 @@ client.on('ready', async()=> {
     })
 
 //clear channel whenver the user type !clearchannle in discord
+//have to work on this still 
     command (client, ['cc', 'clear'], (messageCreate) => {
         if (messageCreate.member.hasPermission('ADMINISTRATOR')){
             messageCreate.channel.message.fecth().then((results) => {

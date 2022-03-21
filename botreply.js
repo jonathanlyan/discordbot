@@ -3,7 +3,7 @@ require('dotenv').config() //connect the dotevn file
 
 const {Client, Intents} = require('discord.js');
 
-// const guildId = "896536018495344662"
+/// const guildId = "896536018495344662"
 
 const client = new Client({ 
     intents: [ Intents.FLAGS.GUILDS,

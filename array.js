@@ -1,5 +1,6 @@
-const {Client, Intents} = require('discord.js')
-require('dotenv').config()
+const {Client, Intents} = require('discord.js');
+const config = require('./config.json');
+
 
 const client = new Client({
     intents: [ Intents.FLAGS.GUILDS,
@@ -13,4 +14,4 @@ client.on("ready", ()=> {
 
 
 
-client.login(process.env.token)
+client.login(config.token)

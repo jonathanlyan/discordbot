@@ -11,5 +11,5 @@ const welcomeSchema = mongoose.Schema({
     text: reqString
 })
 
-//export the file
+//export the file to other file
 module.exports = mongoose.model('welcome-channels', welcomeSchema)
