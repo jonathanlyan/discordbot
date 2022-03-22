@@ -1,9 +1,11 @@
+// eslint-disable-next-line no-console
 console.clear()
-const {Client, Intents} = require('discord.js')
+const { Client, Intents } = require('discord.js'),
 
 const config = require('./config.json')
 const command = require('./command')
 const mongo = require('./mongo')
+// eslint-disable-next-line no-unused-vars
 const messagecounter = require('./schemas/message-count-schema')
 
 const client = new Client({
