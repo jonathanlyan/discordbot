@@ -1,8 +1,9 @@
 const Joi = require('joi')
 const express = require('express')
-const Client = require('discord.js')
+const {Client, Intents } = require('discord.js')
 const mongoose = require('mongoose')
 const config = require('./config.json')
+const mongo = require('./mongo')
 const Schema = mongoose.Schema
 
 //create user input for name and password
@@ -40,17 +41,17 @@ const client = new Client({
     ]
 });
 
-
-client.on('ready', async()=> {
-    console.log("the bot is ready")
-
-        //connect to mongo
-        await mongo().then((mongoose)=> {
-            try{
-                console.log('connected to mongodb')
-            }finally{ //finally will always run
-                mongoose.connection.close()
-            }
+client.on('ready', async ()=>{
+    console.log('bot is on')
+//? need to work how to connect mongo 
+//add a command where user can type "/" and pop up input on mongo
+    await mongo().then((mongoose) =>{
+    try{
+        console.log('mongo connection sucess')
+    }finally{
+        mongoose.connection.close()
+    } 
+})
 })
 
 client.login(config.token)
