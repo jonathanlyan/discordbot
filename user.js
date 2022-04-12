@@ -4,6 +4,7 @@ const {Client, Intents } = require('discord.js')
 const mongoose = require('mongoose')
 const config = require('./config.json')
 const mongo = require('./mongo')
+const command = require('./command')
 const Schema = mongoose.Schema
 
 //create user input for name and password
@@ -43,7 +44,6 @@ const client = new Client({
 
 client.on('ready', async ()=>{
     console.log('bot is on')
-//? need to work how to connect mongo 
 //add a command where user can type "/" and pop up input on mongo
     await mongo().then((mongoose) =>{
     try{
@@ -52,6 +52,8 @@ client.on('ready', async ()=>{
         mongoose.connection.close()
     } 
 })
+//create a commnad where the bot let user input the data
+    command(client, ['register'], )
 })
 
 client.login(config.token)
