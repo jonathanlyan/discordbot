@@ -1,38 +1,11 @@
-const Joi = require('joi')
-const express = require('express')
+console.clear();
 const {Client, Intents } = require('discord.js')
 const mongoose = require('mongoose')
 const config = require('./config.json')
 const mongo = require('./mongo')
 const command = require('./command')
-const Schema = mongoose.Schema
+const User = require('./schemas/UserSchema')
 
-//create user input for name and password
-const schema = new Schema({
-    username: {
-        type: String, 
-        unique: true, 
-        require: true,
-        minlength:5,
-        maxlength: 15
-    },
-    password: {
-        type: String, 
-        require:true,
-        unique:true,
-        minlength: 8,
-        maxlength: 20
-    }
-})
-
-//validate user input
-function validateUser( user ) {
-    const schema = {
-        username: Joi.string().min(5).max(15).required(),
-        password: Joi.string().min(8).max(20).required()
-    };
-    return Joi.validate(user,schema);
-}
 
 
 const client = new Client({
@@ -42,18 +15,43 @@ const client = new Client({
     ]
 });
 
-client.on('ready', async ()=>{
-    console.log('bot is on')
-//add a command where user can type "/" and pop up input on mongo
-    await mongo().then((mongoose) =>{
-    try{
-        console.log('mongo connection sucess')
-    }finally{
-        mongoose.connection.close()
-    } 
-})
-//create a commnad where the bot let user input the data
-    command(client, ['register'], )
+//message event to store user data
+client.on('message', async (message) => {
+    const newUser = await User.create({
+        username: message.author.username,
+        content: message.content, 
+        discordId: message.author.id
+    });
+    // const saveUser = await newUser.save();
 })
 
+//connection to the database
+mongoose.connect(config.mongoPath,{
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then((m) =>{
+    console.log("connected to database");
+}).catch((err) => console.log (error));
+
+client.on('ready', ()=>{
+    console.log('bot is on')
+});
+
+//slash command
+        //!test !hello
+        command(client, ['test', 'hello'], (messageCreate) => {
+            messageCreate.channel.send('hi')
+        })
+    
+    //!servers command
+        command (client, 'servers', messageCreate => {
+            client.guilds.cache.forEach((guild) => {
+                //console.log(guild)
+                //count how many members in the servers
+                messageCreate.channel.send(
+                    `${guild.name} has a total of ${guild.memberCount} members`
+                )
+            })
+        })
 client.login(config.token)
