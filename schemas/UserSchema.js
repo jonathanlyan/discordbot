@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const schema = new mongoose.Schema({
     content: String,
-    username: String,
+    username: mongoose.SchemaTypes.String,
     discordId: {
-        type: String, 
+        type: mongoose.SchemaTypes.String, 
         required: true,
     }, 
 });
